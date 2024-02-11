@@ -1,18 +1,30 @@
 ﻿using Intro.Business;
+using Intro.DataAcess.Concrete;
 using Intro.Entities;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        //CourseManager courseManager = new CourseManager();
+        CourseManager courseManager = new CourseManager(new CourseDal());
 
-        //Course[] courses = courseManager.GetAll();
+        List<Course> courses = courseManager.GetAll();
 
+        foreach (Course course in courses)
+        {
+            Console.WriteLine(course.Name + " " + course.Price);
+        }
 
-        //Console.WriteLine(courses.Length);
+        CourseManager courseManager2 = new CourseManager(new EfCourseDal());
 
-        Polymorphism();
+        List<Course> courses2 = courseManager2.GetAll();
+
+        foreach (Course course2 in courses2)
+        {
+            Console.WriteLine(course2.Name + " " + course2.Price);
+        }
+
+        // Polymorphism();
     }
 
     private static void Polymorphism()
@@ -33,7 +45,7 @@ internal class Program
 
         CorprateCustomer customer3 = new CorprateCustomer();
         customer3.Id = 3;
-        customer3.Name = "Kdolama.io";
+        customer3.Name = "Kodlama.io";
         customer3.CustomerNumber = "1425360";
         customer3.TaxNumber = "123456789";
 
@@ -49,13 +61,13 @@ internal class Program
         {
             if (customer is IndividualCustomer)
             {
-                Console.WriteLine(((IndividualCustomer)customer).NationalIdentity);
+                Console.WriteLine("Identity: " + ((IndividualCustomer)customer).NationalIdentity);
             }
             else if (customer is CorprateCustomer)
             {
-                Console.WriteLine(((CorprateCustomer)customer).TaxNumber);
+                Console.WriteLine("Identity: " + ((CorprateCustomer)customer).TaxNumber);
             }
-            Console.WriteLine(customer.CustomerNumber);
+            Console.WriteLine("Name: " + customer.CustomerNumber);
         }
     }
 }
